@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div id="vue-app">
+      <div class="d-flex justify-content-center mt-5">
+        <h2>Seleccione su cine:</h2>
+      </div>
+      <div class="d-flex justify-content-center mb-5">
+        <select class="cinema" name="select" @change="selectCinema">
+          <option value="Movie Montevideo">Movie Montevideo</option>
+          <option value="Movie Portones">Movie Portones</option>
+          <option value="Movie Punta Carretas">Movie Punta Carretas</option>
+          <option value="Movie Punta Carretas">Movie Nuevocentro</option>
+        </select>
+      </div>
+
+      <div class="d-flex justify-content-center flex-wrap">
+        <div v-for="peli in cartelera">
+          <div class="card m-3 border-dark" style="width: 22rem;">
+            <img class="card-img-top" v-bind:src="peli.poster">
+            <div class="card-body">
+              <h5 class="card-title">{{ peli.movie }}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">{{ peli.genre }}</h6>
+              <p class="card-text">{{ peli.description }}</p>
+              <button @click="showDetails(peli.movie)" class="btn btn-primary">Ver funciones</button>
+            </div>
+            <div class="card-footer">
+              <p>Rating: {{ peli.display[0].rating }}</p>
+              <p>Descripción de rating: {{ peli.display[0].ratingDescription }}</p>
+            </div>
+          </div>
+
+          <div class="text-center m-3">
+            <div v-for="show in peli.display" v-if="details && peli.movie == movie">
+              <div lass="card border-dark" style="width: 22rem;">
+                <div class="card-header">
+                  Función:
+                </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">Fecha y hora: {{ show.timeToDisplay }}</li>
+                  <li class="list-group-item">Idioma: {{ show.language }}</li>
+                  <li class="list-group-item">Sala: {{ show.screenName }}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="webserver.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="vue.js"></script>
+  </body>
+</html>
+
